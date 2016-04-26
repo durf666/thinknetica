@@ -1,10 +1,8 @@
-letters = ('a'..'z').to_a
+letters = ('a'..'z')
 vocals = ['a', 'e', 'i', 'o', 'u', 'y']
-vocals_2 = []
+vocals_out = {}
 pos = 0
-letters.each do |i|
-  pos+= 1
-  vocals_2 << [i, pos] if vocals.include? i
+letters.each_with_index do |i, pos|
+  vocals_out [i]= pos if vocals.include? i
 end
-vocals_hash=vocals_2.to_h
-p vocals_hash
+p vocals_out

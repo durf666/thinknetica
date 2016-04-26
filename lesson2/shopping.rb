@@ -8,9 +8,14 @@ loop do
   cost = gets.chomp.to_i
   print "Введите количество товара: "
   number = gets.chomp.to_i
-  summ = cost * number
+  names << name
+  costs << cost
+  numbers << number
+end
+
+names.each_with index do |name, index|
+  summ = cost[index] * number[index]
   total += summ
   cart[name]= summ
-end
 p cart
 p "Общая стоимость корзины покупок #{total}"
