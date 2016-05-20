@@ -17,11 +17,12 @@ def main_menu
   puts '2. Создать новый поезд'
   puts '3. Управление поездами'
   puts '4. Управление станциями'
+  puts '5. Выход'
   print 'Ваш выбор:'
 
-  i = gets.chomp.to_i
+  @i = gets.chomp.to_i
 
-  case i
+  case @i
   when 1
     add_station
   when 2
@@ -31,6 +32,7 @@ def main_menu
   when 4
     station_control
   end
+
 
 end
 
@@ -127,4 +129,5 @@ end
 
 loop do
 main_menu
+break if @i == 5
 end
