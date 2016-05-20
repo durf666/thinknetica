@@ -8,33 +8,123 @@ require_relative 'station'
 @trains = []
 @stations = []
 
-
+private
 
 def main_menu
+  puts '************************'
   puts 'Программа управления железной дорогой. Выберите желаемое действие.'
   puts '1. Создать новую станцию'
   puts '2. Создать новый поезд'
   puts '3. Управление поездами'
   puts '4. Управление станциями'
-
+  print 'Ваш выбор:'
 
   i = gets.chomp.to_i
 
   case i
   when 1
-    puts 'Введите название станции'
-    name = gets.chomp
-    @stations.push(Station.new(name))
-    @stations.each {|a| p a}
+    add_station
   when 2
-    puts '222'
+    add_train
   when 3
-    puts '333'
+    train_control
   when 4
-    puts '444'
+    station_control
   end
 
 end
 
+def add_train
+  puts '************************'
+  puts 'Выберите тип поезда.'
+  puts '1. Пассажирский'
+  puts '2. Грузовой'
+  print 'Ваш выбор:'
+  
+  i = gets.chomp.to_i
+  case i
+  when 1
+    print 'Введите номер поезда:'
+    name = gets.chomp
+    @trains.push(PassengerTrain.new(name))
+  when 2
+    print 'Введите номер поезда:'
+    name = gets.chomp
+    @trains.push(CargoTrain.new(name))
+  else
+    delimiter
+    puts '!!!Значение неверно!!!'
+    add_train
+  end
+end
 
+def add_station
+  puts 'Введите название станции'
+  name = gets.chomp
+  @stations.push(Station.new(name))
+end
+
+def train_control
+  delimiter
+  puts 'Список существующих поездов:'
+  puts ''
+  @trains.each_with_index {|train, i| puts(i.to_s + '. ' + train.number  + ' ' + train.type)}
+  delimiter
+  print 'Выберите поезд, которым вы желаете управлять:'
+  puts ''
+  i = gets.chomp.to_i
+  @train = @trains[i]
+  delimiter
+  puts "Информация о выбранном поезде"
+  p @train
+  puts '1. Добавить грузовой вагон'
+  puts '2. Добавить пассажирский вагон'
+  puts '3. Отцепить последний вагон'
+  j = gets.chomp.to_i
+  case j 
+  when 1
+    print 'Введите наименование вагона:'
+    name = gets.chomp
+    @car = CargoCar.new(name)
+    @trains[i].add_railcar(@car)
+  when 2
+    print 'Введите наименование вагона:'
+    name = gets.chomp
+    @car = PassengerCar.new(name)
+    @trains[i].add_railcar(@car)
+  when 3
+    @trains[i].remove_railcar
+  end
+end
+
+def station_control
+  delimiter
+  puts 'Список существующих станций:'
+  puts ''
+  @stations.each_with_index {|station, i| puts(i.to_s + '. ' + station.name)}
+  delimiter
+  print 'Выберите станцию, которой вы желаете управлять:'
+  puts ''
+  i = gets.chomp.to_i
+  @station = @stations[i]
+  puts "Информация о поездах на выбранной станции"
+    @station.trains.each_with_index {|train, ind| puts(ind.to_s + '. ' + train)}
+  delimiter
+  puts '1. Добавить поезд на станцию'
+  puts '2. В главное меню'
+  j = gets.chomp.to_i
+  case j
+  when 1
+    puts 'Введите номер поезда'
+    @name = gets.chomp
+    @stations[i].receive_train(@name)
+  end
+end
+
+def delimiter
+  puts '************************'
+end
+
+loop do
 main_menu
+end
