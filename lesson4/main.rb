@@ -68,11 +68,11 @@ def train_control
   delimiter
   puts 'Список существующих поездов:'
   puts ''
-  @trains.each_with_index {|train, i| puts(i.to_s + '. ' + train.number  + ' ' + train.type)}
+  @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
   delimiter
   print 'Выберите поезд, которым вы желаете управлять:'
   puts ''
-  i = gets.chomp.to_i
+  i = gets.chomp.to_i - 1
   @train = @trains[i]
   delimiter
   puts "Информация о выбранном поезде"
@@ -101,18 +101,18 @@ def station_control
   delimiter
   puts 'Список существующих станций:'
   puts ''
-  @stations.each_with_index {|station, i| puts(i.to_s + '. ' + station.name)}
+  @stations.each_with_index {|station, i| puts((i+1).to_s + '. ' + station.name)}
   delimiter
   print 'Выберите станцию, которой вы желаете управлять:'
   puts ''
-  i = gets.chomp.to_i
+  i = gets.chomp.to_i - 1
   @station = @stations[i]
   puts "Информация о поездах на выбранной станции"
-    @station.trains.each_with_index {|train, ind| puts(ind.to_s + '. ' + train)}
+    @station.trains.each_with_index {|train, ind| puts((ind+1).to_s + '. ' + train)}
   delimiter
   puts '1. Добавить поезд на станцию'
   puts '2. В главное меню'
-  j = gets.chomp.to_i
+  j = gets.chomp.to_i - 1
   case j
   when 1
     puts 'Введите номер поезда'
