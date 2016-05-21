@@ -1,7 +1,7 @@
 require_relative 'railcar'
 require_relative 'instance_counter'
 
-include InstanceCounter
+# include InstanceCounter
 
 class PassengerCar < Railcar
 
@@ -11,4 +11,7 @@ class PassengerCar < Railcar
     super
     @type= 'passenger'
   end
+
+include InstanceCounter
+
 end

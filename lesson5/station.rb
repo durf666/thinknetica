@@ -1,4 +1,9 @@
 class Station
+
+  require_relative 'instance_counter'
+
+  include InstanceCounter
+  
   attr_reader :name
   attr_accessor :trains
 

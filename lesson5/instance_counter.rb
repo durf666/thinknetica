@@ -19,7 +19,8 @@ module InstanceCounter
     def register_instance
       @@instances += 1
     end
-    def initialize
+
+    def initialize(name)
       super
       register_instance
     end
