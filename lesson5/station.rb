@@ -2,11 +2,14 @@ class Station
   attr_reader :name
   attr_accessor :trains
 
+  @@stations = []
+
   public
 
   def initialize(name)
     @name = name
     @trains = []
+    @@stations.push self
   end
 
   def receive_train(train)
@@ -27,6 +30,7 @@ class Station
   end
 
   def self.all
-    ObjectSpace.each_object(Station) {|station| p station}
+    # ObjectSpace.each_object(Station) {|station| p station}
+    p @@stations
   end
 end

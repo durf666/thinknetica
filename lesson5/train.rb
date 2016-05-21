@@ -4,12 +4,14 @@ class Train
 
   attr_accessor :speed, :railcars, :route, :station
   attr_reader :number
+  @@trains = {}
 
   public
 
   def initialize(number)
     @number = number
     @railcars = []
+    @@trains[number] = self
     @speed = 0
   end
 
@@ -55,7 +57,8 @@ class Train
   end
 
   def self.find(number)
-    ObjectSpace.each_object(Train) {|train| p train if number == train.number}
+    # ObjectSpace.each_object(Train) {|train| p train if number == train.number}
+    p @@trains[number]
   end
 
   protected
