@@ -1,10 +1,11 @@
 require_relative 'railcar'
 require_relative 'instance_counter'
 
-# include InstanceCounter
+
 
 class PassengerCar < Railcar
 
+  include InstanceCounter
   attr_reader :type
 
   def initialize(name)
@@ -12,6 +13,6 @@ class PassengerCar < Railcar
     @type= 'passenger'
   end
 
-include InstanceCounter
+
 
 end

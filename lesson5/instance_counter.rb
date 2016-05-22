@@ -1,6 +1,6 @@
 module InstanceCounter
 
-
+    
   
   def self.included(base)
     base.extend ClassMethods
@@ -8,21 +8,25 @@ module InstanceCounter
   end
 
   module ClassMethods
+
     def instances
-      puts(@@instances)
+      puts @instances
     end
+    
+    def register_instance
+      @instances||= 0
+      @instances+= 1
+    end  
+    
+  
   end
 
 
   module InstanceMethods
-    @@instances = 0
-    def register_instance
-      @@instances += 1
-    end
 
     def initialize(name)
       super
-      register_instance
+      self.class.register_instance
     end
 
   end
