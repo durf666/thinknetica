@@ -48,11 +48,15 @@ def add_train
   when 1
     print 'Введите номер поезда:'
     name = gets.chomp
-    @trains.push(PassengerTrain.new(name))
+    @train = PassengerTrain.new(name)
+    @trains.push(@train)
+    puts 'Создан новый поезд'
   when 2
     print 'Введите номер поезда:'
     name = gets.chomp
-    @trains.push(CargoTrain.new(name))
+    @train = CargoTrain.new(name)
+    @trains.push(@train)
+    puts 'Создан новый поезд' 
   else
     delimiter
     puts '!!!Значение неверно!!!'

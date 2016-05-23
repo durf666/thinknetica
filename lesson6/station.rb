@@ -4,6 +4,7 @@ class Station
 
   include InstanceCounter
 
+
   attr_reader :name
   attr_accessor :trains
 
@@ -13,6 +14,7 @@ class Station
 
   def initialize(name)
     @name = name
+    validate!
     @trains = []
     @@stations.push self
   end
@@ -37,5 +39,17 @@ class Station
   def self.all
     # ObjectSpace.each_object(Station) {|station| p station}
     p @@stations
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
+  protected
+
+  def validate!
+    raise 'Name cannot be blank' if name.length.zero?
   end
 end

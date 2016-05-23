@@ -8,6 +8,7 @@ class Route
     @first = first
     @last = last
     @stations = [first, last]
+    validate!
   end
 
   def add_station(name)
@@ -20,6 +21,19 @@ class Route
 
   def show
     @stations.each {|station| puts station}
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
+  protected
+
+  def validate!
+    raise 'Route cannot be blank' if stations.nil?
+    raise 'Route must contain at least 2 stations' if stations.length < 2
   end
 
 end
