@@ -11,7 +11,7 @@ require_relative 'station'
 private
 
 def main_menu
-  puts '************************'
+  delimiter
   puts 'Программа управления железной дорогой. Выберите желаемое действие.'
   puts '1. Создать новую станцию'
   puts '2. Создать новый поезд'
@@ -37,7 +37,7 @@ def main_menu
 end
 
 def add_train
-  puts '************************'
+  delimiter
   puts 'Выберите тип поезда.'
   puts '1. Пассажирский'
   puts '2. Грузовой'
@@ -80,9 +80,17 @@ def add_train
 end
 
 def add_station
-  puts 'Введите название станции'
-  name = gets.chomp
-  @stations.push(Station.new(name))
+  begin
+    delimiter
+    puts 'Введите название станции'
+    name = gets.chomp
+    @stations.push(Station.new(name))
+  rescue RuntimeError
+    delimiter
+    puts "Ошибка при вводе имени станции"
+    add_station
+  end
+
 end
 
 def train_control
@@ -124,33 +132,38 @@ def train_control
 end
 
 def station_control
-  delimiter
-  puts 'Список существующих станций:'
-  puts ''
-  @stations.each_with_index {|station, i| puts((i+1).to_s + '. ' + station.name)}
-  delimiter
-  print 'Выберите станцию, которой вы желаете управлять:'
-  puts ''
-  i = gets.chomp.to_i - 1
-  @station = @stations[i]
-  puts "Информация о поездах на выбранной станции"
-    @station.trains.each_with_index {|train, ind| puts((ind+1).to_s + '. ' + train)}
-  delimiter
-  puts '1. Добавить поезд на станцию'
-  puts '2. В главное меню'
-  j = gets.chomp.to_i
-  case j
-  when 1
-    puts 'Список поездов железной дороги:'
-    @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
-    puts 'Введите номер поезда, который вы желаете добавить на станцию'
-    @name = gets.chomp
-    @stations[i].receive_train(@name)
+  if !@stations.length.zero?
+    delimiter
+    puts 'Список существующих станций:'
+    puts ''
+    @stations.each_with_index {|station, i| puts((i+1).to_s + '. ' + station.name)}
+    delimiter
+    print 'Выберите станцию, которой вы желаете управлять:'
+    puts ''
+    i = gets.chomp.to_i - 1
+    @station = @stations[i]
+    puts "Информация о поездах на выбранной станции"
+      @station.trains.each_with_index {|train, ind| puts((ind+1).to_s + '. ' + train)}
+    delimiter
+    puts '1. Добавить поезд на станцию'
+    puts '2. В главное меню'
+    j = gets.chomp.to_i
+    case j
+    when 1
+      puts 'Список поездов железной дороги:'
+      @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
+      puts 'Введите номер поезда, который вы желаете добавить на станцию'
+      @name = gets.chomp
+      @stations[i].receive_train(@name)
+    end
+  else
+    delimiter
+    puts 'Для того, тобы управлять станциями сначала создайте хотя бы 1!!!'
   end
 end
 
 def delimiter
-  puts '************************'
+  puts '********************************************************************'
 end
 
 loop do
