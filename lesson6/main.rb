@@ -44,22 +44,36 @@ def add_train
   print 'Ваш выбор:'
   
   i = gets.chomp.to_i
-  case i
-  when 1
-    print 'Введите номер поезда:'
-    name = gets.chomp
-    @train = PassengerTrain.new(name)
-    @trains.push(@train)
-    puts 'Создан новый поезд'
-  when 2
-    print 'Введите номер поезда:'
-    name = gets.chomp
-    @train = CargoTrain.new(name)
-    @trains.push(@train)
-    puts 'Создан новый поезд' 
-  else
+  begin
+    case i
+    when 1
+      print 'Введите номер поезда:'
+      name = gets.chomp
+      @train = PassengerTrain.new(name)
+      @trains.push(@train)
+      if @train.valid?
+        delimiter
+        puts 'Создан новый поезд'
+      else
+        puts ''
+      end
+    when 2
+      print 'Введите номер поезда:'
+      name = gets.chomp
+      @train = CargoTrain.new(name)
+      @trains.push(@train)
+      if @train.valid?
+        delimiter
+        puts 'Создан новый поезд'
+      end 
+    else
+      delimiter
+      puts '!!!Значение неверно!!!'
+      add_train
+    end
+  rescue RuntimeError
     delimiter
-    puts '!!!Значение неверно!!!'
+    puts 'Формат ввода номера поезда неверный'
     add_train
   end
 end

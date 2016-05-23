@@ -13,8 +13,8 @@ class Station
   public
 
   def initialize(name)
-    @name = name
     validate!
+    @name = name
     @trains = []
     @@stations.push self
   end
@@ -42,7 +42,7 @@ class Station
   end
 
   def valid?
-    validate!
+    true if validate! 
   rescue
     false
   end

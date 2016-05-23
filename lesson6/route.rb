@@ -24,7 +24,7 @@ class Route
   end
 
   def valid?
-    validate!
+    true if validate! 
   rescue
     false
   end

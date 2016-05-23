@@ -7,12 +7,12 @@ class Railcar
   public
 
   def initialize(name)
-    self.vendor= name
     validate!
+    self.vendor= name
   end
 
   def valid?
-    validate!
+    true if validate! 
   rescue
     false
   end

@@ -11,10 +11,10 @@ class Train
 
   def initialize(number)
     @number = number
+    validate!
     @railcars = []
     @@trains[number] = self
     @speed = 0
-    validate!
   end
 
   def speed_up(value)
@@ -64,7 +64,7 @@ class Train
   end
 
   def valid?
-    validate!
+    true if validate! 
   rescue
     false
   end
@@ -84,5 +84,6 @@ class Train
   def validate!
     raise 'Number cannot be blank' if number.nil?
     raise 'Number has wrong format' if number !~ NUMBER_FORMAT
+    true
   end  
 end
