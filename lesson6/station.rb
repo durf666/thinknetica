@@ -13,8 +13,8 @@ class Station
   public
 
   def initialize(name)
-    validate!
     @name = name
+    validate!
     @trains = []
     @@stations.push self
   end

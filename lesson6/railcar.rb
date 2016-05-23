@@ -7,8 +7,8 @@ class Railcar
   public
 
   def initialize(name)
-    validate!
     self.vendor= name
+    validate!
   end
 
   def valid?
@@ -20,6 +20,6 @@ class Railcar
   protected
 
   def validate!
-    raise 'Name cannot be blank' if name.nil?
+    raise 'Name cannot be blank' if vendor.nil?
   end  
 end

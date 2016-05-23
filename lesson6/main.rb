@@ -54,6 +54,7 @@ def add_train
       if @train.valid?
         delimiter
         puts 'Создан новый поезд'
+        puts 'Всего пассажирских поездов:' + PassengerTrain.instances.to_s
       else
         puts ''
       end
@@ -85,35 +86,40 @@ def add_station
 end
 
 def train_control
-  delimiter
-  puts 'Список существующих поездов:'
-  puts ''
-  @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
-  delimiter
-  print 'Выберите поезд, которым вы желаете управлять:'
-  puts ''
-  i = gets.chomp.to_i - 1
-  @train = @trains[i]
-  delimiter
-  puts "Информация о выбранном поезде"
-  p @train
-  puts '1. Добавить грузовой вагон'
-  puts '2. Добавить пассажирский вагон'
-  puts '3. Отцепить последний вагон'
-  j = gets.chomp.to_i
-  case j 
-  when 1
-    print 'Введите наименование вагона:'
-    name = gets.chomp
-    @car = CargoCar.new(name)
-    @trains[i].add_railcar(@car)
-  when 2
-    print 'Введите наименование вагона:'
-    name = gets.chomp
-    @car = PassengerCar.new(name)
-    @trains[i].add_railcar(@car)
-  when 3
-    @trains[i].remove_railcar
+  if @trains.length > 0
+    delimiter
+    puts 'Список существующих поездов:'
+    puts ''
+    @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
+    delimiter
+    print 'Выберите поезд, которым вы желаете управлять:'
+    puts ''
+    i = gets.chomp.to_i - 1
+    @train = @trains[i]
+    delimiter
+    puts "Информация о выбранном поезде"
+    p @train
+    puts '1. Добавить грузовой вагон'
+    puts '2. Добавить пассажирский вагон'
+    puts '3. Отцепить последний вагон'
+    j = gets.chomp.to_i
+    case j 
+    when 1
+      print 'Введите наименование вагона:'
+      name = gets.chomp
+      @car = CargoCar.new(name)
+      @trains[i].add_railcar(@car)
+    when 2
+      print 'Введите наименование вагона:'
+      name = gets.chomp
+      @car = PassengerCar.new(name)
+      @trains[i].add_railcar(@car)
+    when 3
+      @trains[i].remove_railcar
+    end
+  else
+    delimiter
+    puts 'Для того, тобы управлять поездами сначала создайте хотя бы 1!!!'
   end
 end
 
@@ -132,10 +138,12 @@ def station_control
   delimiter
   puts '1. Добавить поезд на станцию'
   puts '2. В главное меню'
-  j = gets.chomp.to_i - 1
+  j = gets.chomp.to_i
   case j
   when 1
-    puts 'Введите номер поезда'
+    puts 'Список поездов железной дороги:'
+    @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
+    puts 'Введите номер поезда, который вы желаете добавить на станцию'
     @name = gets.chomp
     @stations[i].receive_train(@name)
   end
