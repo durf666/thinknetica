@@ -106,18 +106,18 @@ def train_control
     @train = @trains[i]
     delimiter
     puts "Информация о выбранном поезде"
-    @train.wagons do |railcar, index|
-      p railcar[index]
-      p index
-      index+= 1
-    # @train.railcars.each_with_index do |railcar, index|
-    #   if railcar.type == 'passenger'
-    #     puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + 
-    #     '; Зан. мест ' + railcar.busy_seats.to_s
-    #   else
-    #     puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
-    #     'Зан. объем ' + railcar.busy_volume.to_s
-    #   end
+    # @train.wagons do |railcar, index|
+    #   p railcar[index]
+    #   p index
+    #   index+= 1
+    @train.railcars.each_with_index do |railcar, index|
+      if railcar.type == 'passenger'
+        puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + 
+        '; Зан. мест ' + railcar.busy_seats.to_s
+      else
+        puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
+        'Зан. объем ' + railcar.busy_volume.to_s
+      end
     end
     delimiter
     puts '1. Добавить грузовой вагон'
