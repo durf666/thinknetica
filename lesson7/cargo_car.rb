@@ -15,7 +15,7 @@ class CargoCar < Railcar
     @busy_volume = 0
   end
 
-  def fill (volume)
+  def fill(volume)
     self.busy_volume= self.busy_volume + volume
     self.free_volume= self.free_volume - self.busy_volume
   end

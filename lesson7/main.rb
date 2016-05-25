@@ -105,24 +105,26 @@ def train_control
     i = gets.chomp.to_i - 1
     @train = @trains[i]
     delimiter
-    puts "Информация о выбранном поезде"
-    # @train.wagons do |railcar, index|
-    #   p railcar[index]
-    #   p index
-    #   index+= 1
-    @train.railcars.each_with_index do |railcar, index|
+    puts "К выбранному поезду присоединены следующие вагоны:"
+    @train.wagons do |railcar, index|
       if railcar.type == 'passenger'
-        puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + 
-        '; Зан. мест ' + railcar.busy_seats.to_s
+        puts (index+1).to_s + '. ' + railcar.type + '; Св. мест: ' + railcar.free_seats.to_s + '; Зан. мест: ' + railcar.busy_seats.to_s
       else
-        puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
-        'Зан. объем ' + railcar.busy_volume.to_s
+        puts (index+1).to_s + '. ' + railcar.type + '; Св. объем: ' + railcar.free_volume.to_s + '; Зан. объем: ' + railcar.busy_volume.to_s
       end
+    # @train.railcars.each_with_index do |railcar, index|
+    #   if railcar.type == 'passenger'
+    #     puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + '; Зан. мест ' + railcar.busy_seats.to_s
+    #   else
+    #     puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
+    #     'Зан. объем ' + railcar.busy_volume.to_s
+    #   end
     end
     delimiter
     puts '1. Добавить грузовой вагон'
     puts '2. Добавить пассажирский вагон'
     puts '3. Отцепить последний вагон'
+    puts '4. Управление вагонами'
     j = gets.chomp.to_i
     case j 
     when 1
@@ -143,6 +145,28 @@ def train_control
       puts ('Количество мест в вагоне:' + @car.seats.to_s)
     when 3
       @trains[i].remove_railcar
+    when 4
+      print 'Введите номер вагона:'
+      car_number = gets.chomp.to_i
+      if @trains[i].railcars[car_number-1].type == 'passenger'
+        delimiter
+        puts '1. Занять место в вагоне'
+        delimiter
+        input = gets.chomp.to_i
+        if input == 1
+          @trains[i].railcars[car_number-1].sell_ticket
+        end
+      else
+        delimiter
+        puts '1. Заполнить объем в вагоне'
+        delimiter
+        input = gets.chomp.to_i
+        if input == 1
+          puts 'Введите желаемый объем:'
+          volume=gets.chomp.to_i
+          @trains[i].railcars[car_number-1].fill(volume)
+        end
+      end
     end
   else
     delimiter
@@ -163,7 +187,11 @@ def station_control
     if i <= Station.instances
       @station = @stations[i]
       puts "Информация о поездах на выбранной станции"
-        @station.trains.each_with_index {|train, ind| puts((ind+1).to_s + '. ' + train)}
+        # @station.trains.each_with_index {|train, ind| puts((ind+1).to_s + '. ' + train)}
+      @station.show_trains do |train, index|
+        puts (index+1).to_s + '. Номер поезда: ' + train.number + 
+        '; Количество вагонов: ' + train.railcars.length.to_s
+      end
       delimiter
       puts '1. Добавить поезд на станцию'
       puts '2. В главное меню'
@@ -171,7 +199,7 @@ def station_control
       case j
       when 1
         puts 'Список поездов железной дороги:'
-        @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number  + ' ' + train.type)}
+        @trains.each_with_index {|train, i| puts((i+1).to_s + '. ' + train.number.to_s  + ' ' + train.type)}
         puts 'Введите номер поезда, который вы желаете добавить на станцию'
         @name = gets.chomp
         @stations[i].receive_train(@name)
@@ -200,7 +228,13 @@ def start_values
   @trains.push(@train)
   @train = CargoTrain.new('33333')
   @trains.push(@train)
-  @stations.push(Station.new('Gadyukino'))
+  @car = CargoCar.new('bbb', 40)
+  @train.add_railcar(@car)
+  @car = CargoCar.new('ccc', 100)
+  @train.add_railcar(@car)
+  @station = Station.new('Gadyukino')
+  @station.receive_train(@train)
+  @stations.push(@station)
   @stations.push(Station.new('New Vasyuki'))
 end
 

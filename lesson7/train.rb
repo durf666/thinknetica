@@ -70,8 +70,8 @@ class Train
     false
   end
 
-  def wagons(&block)  
-    block.call(self.railcars, self.index)
+  def wagons(&block)
+      self.railcars.each_with_index {|railcar, index| block.call(railcar, index)}
   end  
 
   protected

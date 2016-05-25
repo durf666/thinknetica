@@ -32,8 +32,8 @@ class Station
     end
   end
 
-  def show_trains
-    @trains.each {|train| puts train}
+  def show_trains(&block)
+      self.trains.each_with_index {|railcar, index| block.call(railcar, index)}
   end
 
   def self.all
@@ -48,6 +48,10 @@ class Station
   end
 
   protected
+
+  def check_trains(&block)
+      self.trains.each_with_index {|train, index| block.call(train, index)}
+  end  
 
   def validate!
     raise 'Name cannot be blank' if name.length.zero?
