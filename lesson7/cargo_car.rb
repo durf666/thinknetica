@@ -7,10 +7,10 @@ class CargoCar < Railcar
   attr_reader :type, :volume
   attr_accessor :free_volume, :busy_volume
 
-  def initialize(name)
+  def initialize(name, volume=100)
     super
     @type= 'cargo'
-    @volume = 100
+    @volume = volume
     @free_volume = @volume
     @busy_volume = 0
   end

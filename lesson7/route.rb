@@ -8,6 +8,7 @@ class Route
     @first = first
     @last = last
     @stations = [first, last]
+    register_instance
     validate!
   end
 

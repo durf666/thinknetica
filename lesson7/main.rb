@@ -106,15 +106,20 @@ def train_control
     @train = @trains[i]
     delimiter
     puts "Информация о выбранном поезде"
-    @train.railcars.each_with_index do |railcar, index|
-      if railcar.type == 'passenger'
-        puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + 
-        '; Зан. мест ' + railcar.busy_seats.to_s
-      else
-        puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
-        'Зан. объем ' + railcar.busy_volume.to_s
-      end
+    @train.wagons do |railcar, index|
+      p railcar[index]
+      p index
+      index+= 1
+    # @train.railcars.each_with_index do |railcar, index|
+    #   if railcar.type == 'passenger'
+    #     puts (index.to_i+1).to_s + '. ' + railcar.type + '; Св. мест ' + railcar.free_seats.to_s + 
+    #     '; Зан. мест ' + railcar.busy_seats.to_s
+    #   else
+    #     puts (index.to_i+1).to_s + '. ' + railcar.type + 'Св. объем' + railcar.free_volume.to_s + 
+    #     'Зан. объем ' + railcar.busy_volume.to_s
+    #   end
     end
+    delimiter
     puts '1. Добавить грузовой вагон'
     puts '2. Добавить пассажирский вагон'
     puts '3. Отцепить последний вагон'
@@ -123,13 +128,17 @@ def train_control
     when 1
       print 'Введите наименование вагона:'
       name = gets.chomp
-      @car = CargoCar.new(name)
+      print 'Укажите объем вагона:'
+      volume = gets.chomp
+      @car = CargoCar.new(name, volume)
       @trains[i].add_railcar(@car)
       puts ('Объем вагона:' + @car.volume.to_s)
     when 2
       print 'Введите наименование вагона:'
       name = gets.chomp
-      @car = PassengerCar.new(name)
+      print 'Укажите количество мест в вагоне:'
+      seats = gets.chomp
+      @car = PassengerCar.new(name, seats)
       @trains[i].add_railcar(@car)
       puts ('Количество мест в вагоне:' + @car.seats.to_s)
     when 3
@@ -183,9 +192,9 @@ end
 def start_values
   @train = PassengerTrain.new('111-11')
   @trains.push(@train)
-  @car = PassengerCar.new('aaa')
+  @car = PassengerCar.new('aaa', 25)
   @train.add_railcar(@car)
-  @car = PassengerCar.new('bbb')
+  @car = PassengerCar.new('bbb', 40)
   @train.add_railcar(@car)  
   @train = PassengerTrain.new('222-22')
   @trains.push(@train)

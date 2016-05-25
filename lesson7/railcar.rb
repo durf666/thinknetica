@@ -6,9 +6,10 @@ class Railcar
 
   public
 
-  def initialize(name)
+  def initialize(name, parameter)
     self.vendor= name
     validate!
+    register_instance
   end
 
   def valid?

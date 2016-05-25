@@ -9,12 +9,13 @@ class PassengerCar < Railcar
   attr_reader :type, :seats
   attr_accessor :free_seats, :busy_seats
 
-  def initialize(name)
+  def initialize(name, seats=30)
     super
     @type= 'passenger'
-    @seats= 30
+    @seats= seats
     @free_seats = seats
     @busy_seats = 0
+    register_instance
   end
 
   def sell_ticket

@@ -3,7 +3,7 @@ class Train
   include Vendor
 
   attr_accessor :speed, :railcars, :route, :station
-  attr_reader :number
+  attr_reader :number, :index
   @@trains = {}
   NUMBER_FORMAT = /^[a-z0-9]{3}[-]*[a-z0-9]{2}$/i
 
@@ -15,6 +15,7 @@ class Train
     @railcars = []
     @@trains[number] = self
     @speed = 0
+    @index = 0
   end
 
   def speed_up(value)
@@ -70,7 +71,7 @@ class Train
   end
 
   def wagons(&block)  
-    block.call(self.railcars.each)
+    block.call(self.railcars, self.index)
   end  
 
   protected

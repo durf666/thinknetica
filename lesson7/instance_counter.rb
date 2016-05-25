@@ -26,11 +26,11 @@ module InstanceCounter
       self.class.instances||=0
       self.class.instances+=1
     end
-    def initialize(name)
-      super
-      # self.class.register_instance
-      register_instance
-    end
+    # def initialize(name)
+    #   super
+    #   # self.class.register_instance
+    #   register_instance
+    # end
 
   end
 end
