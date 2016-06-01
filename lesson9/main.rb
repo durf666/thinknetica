@@ -224,6 +224,7 @@ def train_case_4_cargo(i, car_number)
     puts 'Введите желаемый объем:'
     volume = gets.chomp.to_i
     @trains[i].railcars[car_number - 1].fill(volume)
+
   end
 end
 

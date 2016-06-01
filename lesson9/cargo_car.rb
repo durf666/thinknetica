@@ -8,8 +8,9 @@ class CargoCar < Railcar
   include InstanceCounter
   extend Accessors
   attr_reader :type
-  attr_accessor :free_volume, :busy_volume
-  attr_accessor_with_history :volume
+  attr_accessor :volume
+  attr_accessor_with_history :free_volume
+  strong_attr_accessor :busy_volume, 'Fixnum'
 
   def initialize(name, volume = 100)
     super
@@ -21,6 +22,6 @@ class CargoCar < Railcar
 
   def fill(volume)
     self.busy_volume = busy_volume + volume
-    self.free_volume = free_volume - busy_volume
+    self.free_volume = @volume - busy_volume
   end
 end
