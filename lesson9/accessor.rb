@@ -21,7 +21,7 @@ module Accessors
     var_name = "@#{name}".to_sym
     define_method(name) {instance_variable_get(var_name)}
     define_method("#{name}=".to_sym) do |value|
-      (value.class.to_s == klass.to_s) ? instance_variable_set(var_name,value) : (raise 'Incorrect type')
+      (value.class == klass) ? instance_variable_set(var_name,value) : (raise 'Incorrect type')
     end
   end
 

@@ -7,7 +7,6 @@ module InstanceCounter
   # Class methods added by instance counter
   module ClassMethods
     attr_accessor :instances
-
     # def register_instance
     #   @instances||= 0
     #   @instances+= 1

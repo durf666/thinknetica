@@ -18,24 +18,7 @@ module Validate
   module InstanceMethods
     def validate!
       self.class.validations.each do |val|
-        name = val[:name]
-        type = val[:valid_type]
-        args = val[:args]
-        case val[:valid_type]
-        when :presence
-
-          raise "@#{val[:name]} cannot be empty" if instance_variable_get("@#{val[:name]}").nil?
-        when :format
-          regexp = val[:args]
-          raise "@#{val[:name]} format is incorrect" if instance_variable !~ regexp
-        when :type
-
-          # p val[:args][0]
-          # p instance_variable_get("@#{val[:name]}").class
-          # p instance_variable_get("@#{val[:name]}").class == val[:args][0]
-
-          raise "@#{val[:name]} class is incorrect" unless instance_variable_get("@#{val[:name]}").class == val[:args][0]
-        end
+        send "#{val[:valid_type]}_validation", val[:name], val[:args]
       end
       true
     end
@@ -45,5 +28,22 @@ module Validate
     rescue
       false
     end
+
+    private
+
+    def presence_validation(name, *args)
+      raise "@#{name} cannot be empty" if instance_variable_get("@#{name}").nil?
+    end
+
+    def format_validation(name, *args)
+      raise "@#{name} format is incorrect" if instance_variable !~ regexp
+    end
+
+    def type_validation(name, *args)
+      raise "@#{name} class is incorrect" unless instance_variable_get("@#{name}").class == args[0][0]
+    end
+
+
+
   end
 end
