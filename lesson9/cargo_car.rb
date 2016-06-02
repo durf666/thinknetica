@@ -22,6 +22,9 @@ class CargoCar < Railcar
     @volume = volume
     @free_volume = @volume
     @busy_volume = 0
+    validate!
+    rescue
+      p 'Введены некорректные данные'
   end
 
   def fill(volume)

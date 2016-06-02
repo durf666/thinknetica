@@ -25,16 +25,16 @@ module Validate
         when :presence
 
           raise "@#{val[:name]} cannot be empty" if instance_variable_get("@#{val[:name]}").nil?
-          p '1'
         when :format
           regexp = val[:args]
           raise "@#{val[:name]} format is incorrect" if instance_variable !~ regexp
-          p '2'
         when :type
-          p val[:args]
-          p instance_variable_get("@#{val[:name]}").class.ancestors
-          raise "@#{val[:name]} class is incorrect" unless instance_variable_get("@#{val[:name]}").class.ancestors.include? val[:args]
-          p '3'
+
+          # p val[:args][0]
+          # p instance_variable_get("@#{val[:name]}").class
+          # p instance_variable_get("@#{val[:name]}").class == val[:args][0]
+
+          raise "@#{val[:name]} class is incorrect" unless instance_variable_get("@#{val[:name]}").class == val[:args][0]
         end
       end
       true
